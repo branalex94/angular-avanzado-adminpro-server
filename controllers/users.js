@@ -52,9 +52,9 @@ const updateUser = async (req, res) => {
 			})
 		}
 
-		const emailExists = await User.findOne({email: req.body.email})
+		const emailExists = await User.findOne({ email: req.body.email })
 
-		if(emailExists) {
+		if (emailExists) {
 			return res.status(400).json({
 				msg: `El email ${req.body.email} ya existe!`
 			})
@@ -82,8 +82,30 @@ const updateUser = async (req, res) => {
 	}
 }
 
+const deleteUser = async (req, res) => {
+	const { id } = req.params
+	try {
+		const user = await User.findById(id)
+		if (!user) {
+			res.status(404).json({
+				msg: `El usuario con el id: ${id} no existe`
+			})
+		}
+		await User.findByIdAndDelete(id)
+		res.status(200).json({
+			msg: 'El usuario con el id: ${id} ha sido eliminado con exito!'
+		})
+	} catch (err) {
+		console.error(err)
+		res.status(500).json({
+			msg: 'Hubo un error eliminando!'
+		})
+	}
+}
+
 module.exports = {
 	getUsers,
 	createUser,
-	updateUser
+	updateUser,
+	deleteUser
 }
