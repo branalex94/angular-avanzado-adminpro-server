@@ -7,7 +7,7 @@ const usersRoute = require('./routes/users')
 const app = express()
 const PORT = process.env.PORT || 3000
 
-// Middlewars
+// Middlewares
 // CORS implementation
 app.use(cors())
 app.use(express.json())

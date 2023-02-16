@@ -1,9 +1,11 @@
 const User = require('../models/User')
 
-const getUsers = (req, res) => {
+// TODO: solo usuarios validados deberian poder ver la lista de usuarios
+const getUsers = async(req, res) => {
+	const users = await User.find()
 	res.json({
-		msg: 'Ruta de usuarios',
-		users: []
+		msg: 'Lista de usuarios',
+		users
 	})
 }
 
