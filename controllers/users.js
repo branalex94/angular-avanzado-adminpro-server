@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs')
 const User = require('../models/User')
 
 // TODO: solo usuarios validados deberian poder ver la lista de usuarios
@@ -11,7 +12,7 @@ const getUsers = async(req, res) => {
 
 const createUser = async(req, res) => {
 	try {
-		const { nombre, email, password } = req.body
+		const { email, password } = req.body
 		const emailExists = await User.findOne({ email })
 
 		if(emailExists) {
@@ -21,6 +22,10 @@ const createUser = async(req, res) => {
 		}
 
 		const user = new User(req.body)
+
+		const salt = bcrypt.genSaltSync()
+		user.password = bcrypt.hashSync(password, salt)
+
 		await user.save()
 
 		res.json({
