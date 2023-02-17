@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs')
 const User = require('../models/User')
+const { generateJWT } = require('../helpers/jwt')
 
 // TODO: solo usuarios validados deberian poder ver la lista de usuarios
 const getUsers = async (req, res) => {
@@ -26,11 +27,14 @@ const createUser = async (req, res) => {
 		const salt = bcrypt.genSaltSync()
 		user.password = bcrypt.hashSync(password, salt)
 
+		const token = await generateJWT(user._id)
+
 		await user.save()
 
 		res.json({
 			msg: 'Usuario creado!',
-			user
+			user,
+			token
 		})
 	} catch (err) {
 		console.error(err)
