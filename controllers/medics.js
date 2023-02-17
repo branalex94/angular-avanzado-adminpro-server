@@ -1,8 +1,11 @@
 const Medic = require('../models/Medic')
 
 const getMedics = async(req, res) => {
+	const medics = await Medic.find().populate('usuario', 'nombre img').populate('hospital', 'nombre')
+
 	res.status(200).json({
-		msg: 'Lista de medicos!'
+		msg: 'Lista de medicos!',
+		medics
 	})
 }
 
