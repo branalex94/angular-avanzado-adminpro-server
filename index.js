@@ -3,6 +3,7 @@ const express = require('express')
 const cors = require('cors')
 const { connectDb } = require('./db/config')
 const usersRoute = require('./routes/users')
+const hospitalsRoute = require('./routes/hospitals')
 const authRoute = require('./routes/auth')
 
 const app = express()
@@ -18,6 +19,7 @@ connectDb()
 
 // Routes
 app.use('/api/users', usersRoute)
+app.use('/api/hospitals', hospitalsRoute)
 app.use('/api/login', authRoute)
 
 // Port setup and app startup
