@@ -2,9 +2,10 @@ require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const { connectDb } = require('./db/config')
+const authRoute = require('./routes/auth')
 const usersRoute = require('./routes/users')
 const hospitalsRoute = require('./routes/hospitals')
-const authRoute = require('./routes/auth')
+const medicsRoute = require('./routes/medics')
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -18,9 +19,10 @@ app.use(express.json())
 connectDb()
 
 // Routes
+app.use('/api/login', authRoute)
 app.use('/api/users', usersRoute)
 app.use('/api/hospitals', hospitalsRoute)
-app.use('/api/login', authRoute)
+app.use('/api/medics', medicsRoute)
 
 // Port setup and app startup
 app.listen(PORT, () => {
