@@ -15,7 +15,11 @@ const { validateFields } = require('../middlewares/validateFields')
 const { validateJWT } = require('../middlewares/validateJWT')
 
 router.get('/', getMedics)
-router.post('/', createMedic)
+router.post('/', [
+		validateJWT,
+		check('nombre', 'El nombre es obligatorio').not().isEmpty(),
+		validateFields
+	], createMedic)
 router.put('/:id', updateMedic)
 router.delete('/:id',  deleteMedic)
 
