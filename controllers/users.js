@@ -4,11 +4,21 @@ const { generateJWT } = require('../helpers/jwt')
 
 // TODO: solo usuarios validados deberian poder ver la lista de usuarios
 const getUsers = async (req, res) => {
-  const users = await User.find()
+  const offset = Number(req.query.offset) || 0
+  const limit = Number(req.query.limit) || 10
+
+  const [users, totalCount] = await Promise.all([
+    User.find({}, 'nombre email role google')
+      .skip(offset)
+      .limit(limit),
+    User.count()
+  ])
+
   res.json({
     msg: 'Lista de usuarios',
     users,
-    id: req.id
+    id: req.id,
+    totalItems: totalCount
   })
 }
 
