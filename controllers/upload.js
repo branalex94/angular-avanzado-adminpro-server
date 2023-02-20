@@ -1,4 +1,5 @@
 const { v4: uuidv4 } = require('uuid')
+const { updateImg } = require('../helpers/updateImg')
 
 const fileUpload = async (req, res) => {
 	const { table, id } = req.params
@@ -42,6 +43,9 @@ const fileUpload = async (req, res) => {
   			msg: 'Hubo un error subiendo tu archivo'
   		})
   	}
+
+  	// Actualizar base de datos
+  	updateImg(table, id, newFilename)
 
 		res.json({
 			msg: 'Ruta de subir archivos!',
