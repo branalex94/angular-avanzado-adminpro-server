@@ -1,12 +1,14 @@
 require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
+const fileUpload = require('express-fileupload')
 const { connectDb } = require('./db/config')
 const authRoute = require('./routes/auth')
 const usersRoute = require('./routes/users')
 const hospitalsRoute = require('./routes/hospitals')
 const medicsRoute = require('./routes/medics')
 const searchRoute = require('./routes/search')
+const uploadRoute = require('./routes/upload')
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -15,6 +17,7 @@ const PORT = process.env.PORT || 3000
 // CORS implementation
 app.use(cors())
 app.use(express.json())
+app.use(fileUpload())
 
 // DB connection
 connectDb()
@@ -25,6 +28,7 @@ app.use('/api/users', usersRoute)
 app.use('/api/hospitals', hospitalsRoute)
 app.use('/api/medics', medicsRoute)
 app.use('/api/all', searchRoute)
+app.use('/api/upload', uploadRoute)
 
 // Port setup and app startup
 app.listen(PORT, () => {
