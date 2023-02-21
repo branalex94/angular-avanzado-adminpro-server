@@ -60,7 +60,7 @@ const fileUpload = async (req, res) => {
 const getFile = (req, res) => {
   const { table, file } = req.params
   const filePath = path.join(__dirname, `../uploads/${table}/${file}`)
-  const defaultImg = path.join(__dirname, '../public/no-img.jpg')
+  const defaultImg = path.join(__dirname, '../public/assets/no-img.jpg')
 
   // Imagen por defecto si no existe una imagen
   if(!fs.existsSync(filePath)) {

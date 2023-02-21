@@ -16,8 +16,17 @@ const PORT = process.env.PORT || 3000
 // Middlewares
 // CORS implementation
 app.use(cors())
+// Public directory
+
+app.use(express.static('public'))
+
+// var serveIndex = require('serve-index');
+// app.use(express.static(__dirname + '/'))
+// app.use('/uploads', serveIndex(__dirname + '/uploads'));
+
 app.use(express.json())
 app.use(fileUpload())
+
 
 // DB connection
 connectDb()
