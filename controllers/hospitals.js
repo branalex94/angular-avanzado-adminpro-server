@@ -32,10 +32,34 @@ const createHospital = async(req, res) => {
 	
 }
 
-const updateHospital = async(req, res) => {
-	res.status(200).json({
-		msg: 'Actualizar hospital!'
-	})
+const updateHospital = async (req, res) => {
+	try {
+		const { id } = req.params
+		const { id: userId } = req
+		const dbHospital = await Hospital.findById(id)
+
+		if(!dbHospital) {
+			return res.status(404).json({
+				msg: 'El hospital no existe en nuestra base de datos'
+			})
+		}
+
+    const hospitalChanges = {
+    	...req.body,
+    	userId
+    }
+
+    const updatedHospital = await Hospital.findByIdAndUpdate(id, hospitalChanges, { new: true })
+
+		res.status(200).json({
+			msg: 'Actualizar hospital!',
+      updatedHospital
+		})
+	} catch (err) {
+		res.status(500).json({
+			msg: 'Hubo un error en el servidor'
+		})
+	}
 }
 
 const deleteHospital = async(req, res) => {
