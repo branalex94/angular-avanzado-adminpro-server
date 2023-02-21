@@ -27,6 +27,12 @@ router.put('/:id', [
 	], 
   updateHospital
 )
-router.delete('/:id',  deleteHospital)
+router.delete('/:id', [
+    validateJWT,
+    check('id', 'Debe ser un id de Mongo valido').isMongoId(),
+    validateFields
+	], 
+  deleteHospital
+)
 
 module.exports = router

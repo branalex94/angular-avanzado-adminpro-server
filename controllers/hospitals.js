@@ -62,10 +62,31 @@ const updateHospital = async (req, res) => {
 	}
 }
 
-const deleteHospital = async(req, res) => {
-	res.status(200).json({
-		msg: 'Eliminar hospital!'
-	})
+const deleteHospital = async (req, res) => {
+
+	try {
+    const { id } = req.params
+    const dbHospital = await Hospital.findById(id)
+
+    if(!dbHospital) {
+    	return res.status(404).json({
+    		msg: 'El hospital no existe'
+    	})
+    }
+
+    await Hospital.findByIdAndDelete(id)
+
+    res.json({
+    	msg: 'Hospital eliminado!',
+    	dbHospital
+    })
+
+	} catch (err) {
+		console.log(err)
+		res.status(500).json({
+			msg: 'Hubo un error en el servidor'
+		})
+	}
 }
 
 module.exports = {
