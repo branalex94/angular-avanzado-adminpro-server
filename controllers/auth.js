@@ -79,7 +79,19 @@ const  googleLogin = async (req, res) => {
   }
 }
 
+const renewJWTToken = async (req, res) => {
+  const { id } = req
+
+  const token = await generateJWT(id)
+
+  res.json({
+    msg: 'Renovar token!',
+    token
+  })
+}
+
 module.exports = {
   login,
-  googleLogin
+  googleLogin,
+  renewJWTToken
 }
