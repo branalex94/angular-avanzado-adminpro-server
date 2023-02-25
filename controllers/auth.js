@@ -83,10 +83,12 @@ const renewJWTToken = async (req, res) => {
   const { id } = req
 
   const token = await generateJWT(id)
-
+  const user = await User.findById(id)
+  
   res.json({
     msg: 'Renovar token!',
-    token
+    token,
+    user
   })
 }
 
