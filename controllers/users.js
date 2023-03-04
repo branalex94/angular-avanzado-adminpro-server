@@ -66,23 +66,27 @@ const updateUser = async (req, res) => {
       })
     }
 
-    const emailExists = await User.findOne({ email: req.body.email })
+    const { password, google, email, ...other } = req.body
 
-    if (emailExists) {
+    if (user.email !== email) {
+      const emailExists = await User.findOne({ email })
+
+      if(emailExists) {
+        return res.status(400).json({
+          msg: 'El email ya existe!'
+        })
+      }
+    }
+
+    if(!user.google) {
+      other.email = email
+    } else if (user.email !== email) {
       return res.status(400).json({
-        msg: `El email ${req.body.email} ya existe!`
+        msg: 'Los usuarios de google no pueden actualizar el correo'
       })
     }
 
-    // TODO: Validar token y comprobar si es el usuario correcto
-    // ...
-
-    // Actualizar registro
-    const fields = req.body
-    delete fields.password
-    delete fields.google
-
-    const updatedUser = await User.findByIdAndUpdate(id, fields, { new: true })
+    const updatedUser = await User.findByIdAndUpdate(id, other, { new: true })
 
     res.json({
       msg: 'Updated user!',
