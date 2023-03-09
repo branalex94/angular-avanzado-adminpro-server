@@ -4,7 +4,7 @@ const Hospital = require('../models/Hospital')
 const Medic = require('../models/Medic')
 
 const deleteOldImg = (path) => {
-  if(fs.existsSync(path)) {
+  if (fs.existsSync(path)) {
     fs.unlinkSync(path)
   }
 }
@@ -46,5 +46,5 @@ const updateImg = async (table, id, newFilename) => {
 }
 
 module.exports = {
-	updateImg
+  updateImg
 }

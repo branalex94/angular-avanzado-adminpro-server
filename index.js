@@ -27,7 +27,6 @@ app.use(express.static('public'))
 app.use(express.json())
 app.use(fileUpload())
 
-
 // DB connection
 connectDb()
 

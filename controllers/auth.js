@@ -40,7 +40,7 @@ const login = async (req, res) => {
   }
 }
 
-const  googleLogin = async (req, res) => {
+const googleLogin = async (req, res) => {
   const { token } = req.body
   try {
     const { email, name, picture } = await googleVerify(token)
@@ -84,7 +84,7 @@ const renewJWTToken = async (req, res) => {
 
   const token = await generateJWT(id)
   const user = await User.findById(id)
-  
+
   res.json({
     msg: 'Renovar token!',
     token,

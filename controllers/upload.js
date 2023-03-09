@@ -15,7 +15,7 @@ const fileUpload = async (req, res) => {
 		})
 	}
 
-  // Validar si algun archivo fue enviado
+	// Validar si algun archivo fue enviado
 	if(!req.files || Object.keys(req.files).length === 0) {
 		return res.status(400).json({
 			msg: 'No hay imagenes enviadas'
@@ -24,15 +24,15 @@ const fileUpload = async (req, res) => {
 
 	const { image } = req.files
 	const splitFilename = image.name.split('.')
-  const fileExt = splitFilename[splitFilename.length - 1]
+	const fileExt = splitFilename[splitFilename.length - 1]
 
-  const validFileExtensions = ['png', 'jpg', 'jpeg', 'gif']
+	const validFileExtensions = ['png', 'jpg', 'jpeg', 'gif']
 
-  if(!validFileExtensions.includes(fileExt)) {
-  	return res.status(400).json({
-			msg: 'Tipo de archivo no valido'
-		})
-  }
+	if(!validFileExtensions.includes(fileExt)) {
+		return res.status(400).json({
+				msg: 'Tipo de archivo no valido'
+			})
+	}
 
   // Generar nombre del archivo
   const newFilename = `${uuidv4()}.${fileExt}`

@@ -19,10 +19,10 @@ login
 )
 
 router.post('/google', [
-    check('token', 'El token de Google debe ser obligatorio').not().isEmpty(),
-    validateFields
-  ], 
-  googleLogin
+  check('token', 'El token de Google debe ser obligatorio').not().isEmpty(),
+  validateFields
+],
+googleLogin
 )
 
 module.exports = router
