@@ -5,34 +5,34 @@ const { v4: uuidv4 } = require('uuid')
 const { updateImg } = require('../helpers/updateImg')
 
 const fileUpload = async (req, res) => {
-	const { table, id } = req.params
+  const { table, id } = req.params
 
-	const allowedTables = ['users', 'hospitals', 'medics']
-	// Validar si la tabla solicitada existe
-	if(!allowedTables.includes(table)) {
-		return res.status(400).json({
-			msg: 'Tabla invalida'
-		})
-	}
+  const allowedTables = ['users', 'hospitals', 'medics']
+  // Validar si la tabla solicitada existe
+  if (!allowedTables.includes(table)) {
+    return res.status(400).json({
+      msg: 'Tabla invalida'
+    })
+  }
 
-	// Validar si algun archivo fue enviado
-	if(!req.files || Object.keys(req.files).length === 0) {
-		return res.status(400).json({
-			msg: 'No hay imagenes enviadas'
-		})
-	}
+  // Validar si algun archivo fue enviado
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return res.status(400).json({
+      msg: 'No hay imagenes enviadas'
+    })
+  }
 
-	const { image } = req.files
-	const splitFilename = image.name.split('.')
-	const fileExt = splitFilename[splitFilename.length - 1]
+  const { image } = req.files
+  const splitFilename = image.name.split('.')
+  const fileExt = splitFilename[splitFilename.length - 1]
 
-	const validFileExtensions = ['png', 'jpg', 'jpeg', 'gif']
+  const validFileExtensions = ['png', 'jpg', 'jpeg', 'gif']
 
-	if(!validFileExtensions.includes(fileExt)) {
-		return res.status(400).json({
-				msg: 'Tipo de archivo no valido'
-			})
-	}
+  if (!validFileExtensions.includes(fileExt)) {
+    return res.status(400).json({
+      msg: 'Tipo de archivo no valido'
+    })
+  }
 
   // Generar nombre del archivo
   const newFilename = `${uuidv4()}.${fileExt}`
@@ -41,7 +41,7 @@ const fileUpload = async (req, res) => {
   const path = `./uploads/${table}/${newFilename}`
 
   image.mv(path, (err) => {
-  	if(err) {
+  	if (err) {
   		return res.status(500).json({
   			msg: 'Hubo un error subiendo tu archivo'
   		})
@@ -50,10 +50,10 @@ const fileUpload = async (req, res) => {
   	// Actualizar base de datos
   	updateImg(table, id, newFilename)
 
-		res.json({
-			msg: 'Ruta de subir archivos!',
-			newFilename
-		})
+    res.json({
+      msg: 'Ruta de subir archivos!',
+      newFilename
+    })
   })
 }
 
@@ -63,7 +63,7 @@ const getFile = (req, res) => {
   const defaultImg = path.join(__dirname, '../public/assets/no-img.jpg')
 
   // Imagen por defecto si no existe una imagen
-  if(!fs.existsSync(filePath)) {
+  if (!fs.existsSync(filePath)) {
   	return res.sendFile(defaultImg)
   }
 
@@ -71,6 +71,6 @@ const getFile = (req, res) => {
 }
 
 module.exports = {
-	fileUpload,
-	getFile
+  fileUpload,
+  getFile
 }

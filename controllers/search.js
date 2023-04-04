@@ -12,11 +12,11 @@ const getSearch = async (req, res) => {
     // const results = await Promise.all(
     // 	MODELS.map(model => model.find({ nombre: regEx }))
     // )
-    const [users, medics, hospitals] = await Promise.all(
+    const [users, medics, hospitals] = await Promise.all([
       User.find({ nombre: regEx }),
       Medic.find({ nombre: regEx }),
       Hospital.find({ nombre: regEx })
-    )
+    ])
 
 	  res.status(200).json({
 		  msg: 'Ruta de busqueda',

@@ -19,12 +19,12 @@ const getMedic = async (req, res) => {
       .populate('usuario', 'nombre img')
       .populate('hospital', 'nombre')
 
-      if (!medic) {
-        return res.status(404).json({
-          msg: 'Numero de ID incorrecto'
-        })
-      }
-    
+    if (!medic) {
+      return res.status(404).json({
+        msg: 'Numero de ID incorrecto'
+      })
+    }
+
     res.json({
       msg: 'todo bien!',
       medic
