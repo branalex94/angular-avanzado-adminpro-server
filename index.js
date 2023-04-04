@@ -1,4 +1,5 @@
 require('dotenv').config()
+const path = require('path')
 const express = require('express')
 const cors = require('cors')
 const fileUpload = require('express-fileupload')
@@ -37,6 +38,10 @@ app.use('/api/hospitals', hospitalsRoute)
 app.use('/api/medics', medicsRoute)
 app.use('/api/all', searchRoute)
 app.use('/api/upload', uploadRoute)
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'public/index.html'))
+})
 
 // Port setup and app startup
 app.listen(PORT, () => {
